@@ -1,24 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Forms from './components/Forms';
+
+let teammates = [
+  { name: 'Abhit Sahota',
+    email: 'me@abhit.com',
+    role: 'Student'},
+  { name: 'Jeremy Brady',
+    email: 'TL@lambda.com',
+    role: 'TL'},
+  { name: 'John Ruble',
+    email: 'johnr@lambda.com',
+    role: 'Student'},
+  { name: 'Melissa Murphy',
+    email: 'SL@lambda.com',
+    role: 'SL'}, 
+]
 
 function App() {
+
+  let [teamList, setTeamList] = useState(teammates)
+
+  const addteammate = member => {
+    const newMember = {
+      name: member.name,
+      email: member.email,
+      role: member.role
+    };
+
+    setTeamList([...teamList, newMember]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>
+        <Forms addteammate={addteammate} />
+      </div>
+      <div>
+        {teamList.map(person => {
+          return (
+            <ul key={person.name}>
+              <li>{person.name}</li>
+              <li>{person.email}</li>
+              <li>{person.role}</li>
+              <br />
+            </ul>
+        )})}
+      </div>
     </div>
   );
 }
